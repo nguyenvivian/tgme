@@ -34,12 +34,12 @@ public class TFETile {
 		this.coord = coord;
 	}
 
-	private Coordinate findEmptySpace() {		
+	public Coordinate findEmptySpace(Board board) {		
 		while(true) {
-			int x = Random.nextInt(Board.getBoardWidth());
-			int y = Random.nextInt(Board.getBoardHeight());
+			int x = Random.nextInt(board.getBoardWidth());
+			int y = Random.nextInt(board.getBoardHeight());
 			
-			if (Board.getGameBoard()[x][y] == null) {
+			if (board.isValid(new Coordinate(x,y))) {
 				return new Coordinate(x, y);
 			}
 		}

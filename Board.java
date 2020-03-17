@@ -12,11 +12,16 @@ public class Board {
 		gameBoard = new TFETile[boardWidth][boardHeight];
 		availableMove= new ArrayList<TFETile>();
 	}
+	public int getBoardWidth(){
+		return this.boardWidth;
+	}
+	public int getBoardHeight(){
+		return this.boardHeight;
+	}
 	public void makeBoard(){
 		for(int row = 0; row < this.boardWidth;row++){
-			for(int col = 0; col < this.boardHeight;col++){
-					
-			System.out.print('\n');	
+			for(int col = 0; col < this.boardHeight;col++){	
+				System.out.print('\n');	
 			}
 		}
 	}
@@ -24,9 +29,11 @@ public class Board {
 		Boolean possible = false;
 		do{
 			possible = false;
-			for (TFETile[] tile : this.gameBoard) {
-				if(move(dir, tile))
-					possible = true;
+			for (TFETile[] tileArr : this.gameBoard) {
+				for (TFETile tile : tileArr) {
+					if(move(dir, tile))
+						possible = true;
+				}
 			}
 		}while(possible);
 	}
@@ -48,7 +55,7 @@ public class Board {
 		
 		if(isValid(targetCoord)){ 
 			if(isTile(targetCoord)){
-				TFETile t2 = this.gameBoard[targetCoord.x,targetCoord.y];
+				TFETile t2 = this.gameBoard[targetCoord.x][targetCoord.y];
 				if (tile.value == t2.getValue() && !t2.getIsMerged()){
 					merge(tile,t2);
 					return true;
@@ -56,8 +63,8 @@ public class Board {
 				return false;
 			}	
 			else{
-				this.gameBoard[tile.coord.x,t.coord.y] = null;
-				this.gameBoard[targetCoord.x,targetCoord.y] = tile;
+				this.gameBoard[tile.coord.x][tile.coord.y] = null;
+				this.gameBoard[targetCoord.x][targetCoord.y] = tile;
 				tile.coord = targetCoord;
 				return true;
 			}
@@ -70,7 +77,7 @@ public class Board {
 		return (c.x > 0 && c.x < this.boardWidth) || (c.y > 0 && c.y < this.boardHeight);
 	}
 	public Boolean isTile(Coordinate c){
-		return this.gameBoard[c.x,c.y];
+		return this.gameBoard[c.x][c.y] == null;
 	}
 	public void merge(TFETile t1,TFETile t2){
 		t2.setValue(t2.getValue() * 2);
