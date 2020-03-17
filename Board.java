@@ -21,9 +21,11 @@ public class Board {
 		return this.boardHeight;
 	}
 	public void makeBoard(){
-		for (int i = 0;i<5;i++){ //only make 4 tiles on board for now	
+		for (int i = 0;i<1;i++){ //only make 4 tiles on board for now	
 			int x = random.nextInt(this.boardWidth);
+			System.out.println("x when made: " +x);
 			int y = random.nextInt(this.boardHeight);
+			System.out.println("y when made: " +y);
 			int val = assignRandomValue();
 			if (this.isValid(new Coordinate(x,y)) && !this.isTile(new Coordinate(x,y))) {
 				this.gameBoard[x][y] = new TFETile(x,y,val);
@@ -32,7 +34,7 @@ public class Board {
 	}
 	private int assignRandomValue() {
 		//tiles can start as a 2 or a 4
-		int multiplier = random.nextInt(1) + 1; //returns 0/1 + 1
+		int multiplier = random.nextInt(2) + 1; //returns 0/1 + 1
 		return multiplier * 2; // 1 or 2 * 2 = 2 or 4
 	}
 	public void handleArrows(String dir){
@@ -41,12 +43,15 @@ public class Board {
 			possible = false;
 			for (TFETile[] tileArr : this.gameBoard) {
 				for (TFETile tile : tileArr) {
-					if(move(dir, tile))
-						possible = true;
+					if (!(tile == null)) {
+						if(move(dir, tile))
+							possible = true;
+					}
 				}
 			}
 		}while(possible);
 	}
+	
 	public Boolean move(String dir, TFETile tile){
 		Coordinate targetCoord = tile.getCoord();
 		if(dir == "right"){
@@ -64,6 +69,7 @@ public class Board {
 		}
 		
 		if(isValid(targetCoord)){ 
+			System.out.println(targetCoord.toString());
 			if(isTile(targetCoord)){
 				TFETile t2 = this.gameBoard[targetCoord.x][targetCoord.y];
 				if (tile.value == t2.getValue() && !t2.getIsMerged()){
@@ -84,7 +90,8 @@ public class Board {
 		}
 	}
 	public Boolean isValid(Coordinate c){
-		return (c.x > 0 && c.x < this.boardWidth) || (c.y > 0 && c.y < this.boardHeight);
+		System.out.println("isValid: "+c.toString());
+		return (c.x >= 0 && c.x < this.boardWidth) || (c.y >= 0 && c.y < this.boardHeight);
 	}
 	public Boolean isTile(Coordinate c){
 		return this.gameBoard[c.x][c.y] != null;

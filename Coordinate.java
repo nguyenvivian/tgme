@@ -1,7 +1,12 @@
 
 
 public class Coordinate {
-    public final int x;
+    @Override
+	public String toString() {
+		return "Coordinate [x=" + x + ", y=" + y + "]";
+	}
+
+	public final int x;
     public final int y;
 
     public Coordinate(int x, int y) { 

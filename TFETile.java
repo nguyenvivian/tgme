@@ -12,6 +12,7 @@ public class TFETile {
 		this.value = val;
         this.isMerged = false;
 	}
+	
 	public int getValue(){
 		return this.value;
 	}
