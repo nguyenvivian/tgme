@@ -24,6 +24,7 @@ public class PlayerInput extends JFrame implements KeyListener
 		if(keyCode == KeyEvent.VK_LEFT)
 		{
 			System.out.println("left pressed");
+		
 		}
 		else if (keyCode == KeyEvent.VK_RIGHT)
 		{

@@ -2,14 +2,28 @@ import java.util.Random;
 
 public class TFETile {
 	
-	int value;
-	Coordinate coord;
+	public int value;
+	public Coordinate coord;
 	
 	TFETile(){
 		coord = findEmptySpace();
         value = assignRandomValue();
 	}
-	
+	public int getValue(){
+		return this.value;
+	}
+	public void printTile(){
+		System.out.print(value);
+	}
+	public Coordinate getCoord(){
+		return this.coord;
+	}
+	public int setValue(int val){
+		this.value = val;
+	}
+	public Coordinate setCoord(Coordinate coord){
+		this.coord = coord;
+	}
 	private Coordinate findEmptySpace() {		
 		while(true) {
 			int x = Random.nextInt(Board.getBoardWidth());
