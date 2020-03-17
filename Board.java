@@ -48,7 +48,7 @@ public class Board {
 		
 		if(isValid(targetCoord)){ 
 			if(isTile(targetCoord)){
-				Tile t2 = this.gameBoard[targetCoord.x,targetCoord.y];
+				TFETile t2 = this.gameBoard[targetCoord.x,targetCoord.y];
 				if (tile.value == t2.getValue() && !t2.getIsMerged()){
 					merge(tile,t2);
 					return true;
