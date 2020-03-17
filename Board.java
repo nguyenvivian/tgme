@@ -9,30 +9,14 @@ public class Board {
 		this.boardHeight = boardHeight;
 		gameBoard = new Tile[boardWidth][boardHeight];
 	}
-
-	public int getBoardWidth() {
-		return boardWidth;
+	public void printBoard(){
+		for(int row = 0; row < this.boardWidth;row++){
+			for(int col = 0; col < this.boardHeight;col++){
+				if(gameBoard[row][col].empty()) 
+					System.out.print(" . ");
+				else
+					gameBoard[row][col].printTile();
+			System.out.print('\n');	
+		}
 	}
-
-	public void setBoardWidth(int boardWidth) {
-		this.boardWidth = boardWidth;
-	}
-
-	public int getBoardHeight() {
-		return boardHeight;
-	}
-
-	public void setBoardHeight(int boardHeight) {
-		this.boardHeight = boardHeight;
-	}
-
-	public Tile[][] getGameBoard() {
-		return gameBoard;
-	}
-
-	public void setGameBoard(Tile[][] gameBoard) {
-		this.gameBoard = gameBoard;
-	}
-	
-	
 }
