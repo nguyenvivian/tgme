@@ -4,10 +4,12 @@ public class TFETile {
 	
 	public int value;
 	public Coordinate coord;
+	Boolean isMerged;
 	
 	TFETile(){
 		coord = findEmptySpace();
         value = assignRandomValue();
+        isMerged = false;
 	}
 	public int getValue(){
 		return this.value;
@@ -18,12 +20,20 @@ public class TFETile {
 	public Coordinate getCoord(){
 		return this.coord;
 	}
-	public int setValue(int val){
-		this.value = val;
+
+	public Boolean getIsMerged() {
+		return isMerged;
 	}
-	public Coordinate setCoord(Coordinate coord){
+	public void setIsMerged(Boolean isMerged) {
+		this.isMerged = isMerged;
+	}
+	public void setValue(int value) {
+		this.value = value;
+	}
+	public void setCoord(Coordinate coord) {
 		this.coord = coord;
 	}
+
 	private Coordinate findEmptySpace() {		
 		while(true) {
 			int x = Random.nextInt(Board.getBoardWidth());

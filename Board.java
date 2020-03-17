@@ -17,20 +17,21 @@ public class Board {
 			for(int col = 0; col < this.boardHeight;col++){
 					
 			System.out.print('\n');	
+			}
 		}
 	}
 	public void handleArrows(String dir){
-		bool possible = false;
+		Boolean possible = false;
 		do{
 			possible = false;
-			for (Tile tile : this.Board) {
+			for (TFETile[] tile : this.gameBoard) {
 				if(move(dir, tile))
 					possible = true;
 			}
 		}while(possible);
 	}
-	public bool move(String dir, Tile t){
-		Coordinate targetCoord = t.coord;
+	public Boolean move(String dir, TFETile tile){
+		Coordinate targetCoord = tile.getCoord();
 		if(dir == "right"){
 			targetCoord = new Coordinate(targetCoord.x+1,targetCoord.y);
 		}
@@ -47,17 +48,17 @@ public class Board {
 		
 		if(isValid(targetCoord)){ 
 			if(isTile(targetCoord)){
-				Tile t2 = this.Board[targetCoord.x,targetCoord.y];
-				if (t.value == t2.value && !t2.merged){
-					merge(t,t2);
+				Tile t2 = this.gameBoard[targetCoord.x,targetCoord.y];
+				if (tile.value == t2.getValue() && !t2.getIsMerged()){
+					merge(tile,t2);
 					return true;
 				}
 				return false;
 			}	
 			else{
-				this.Board[t.coord.x,t.coord.y] = null;
-				this.Board[targetCoord.x,targetCoord.y] = t;
-				t.coord = targetCoord;
+				this.gameBoard[tile.coord.x,t.coord.y] = null;
+				this.gameBoard[targetCoord.x,targetCoord.y] = tile;
+				tile.coord = targetCoord;
 				return true;
 			}
 		}
@@ -65,16 +66,15 @@ public class Board {
 			return false;
 		}
 	}
-	public bool isValid(Coordinate c){
+	public Boolean isValid(Coordinate c){
 		return (c.x > 0 && c.x < this.boardWidth) || (c.y > 0 && c.y < this.boardHeight);
 	}
-	public bool isTile(Coordinate c){
-		return this.Board[c.x,c.y];
+	public Boolean isTile(Coordinate c){
+		return this.gameBoard[c.x,c.y];
 	}
-	public void merge(Tile t1,Tile t2){
-		this.Board
-		t2.value = t2.value * 2;
-		t2.merged = true;
+	public void merge(TFETile t1,TFETile t2){
+		t2.setValue(t2.getValue() * 2);
+		t2.setIsMerged(true);
 	}
 	public void printBoard(){
 		for(int row = 0; row < this.boardWidth;row++){
