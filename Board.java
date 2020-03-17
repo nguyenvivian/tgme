@@ -50,22 +50,23 @@ public class Board {
 				}
 			}
 		}while(possible);
+		printBoard();
 	}
 	
 	public Boolean move(String dir, TFETile tile){
 		Coordinate targetCoord = tile.getCoord();
 		if(dir == "right"){
-			targetCoord = new Coordinate(targetCoord.x,targetCoord.y+1);
+			targetCoord = new Coordinate(targetCoord.x+1,targetCoord.y);
 		}
 		if(dir == "left"){
-			targetCoord = new Coordinate(targetCoord.x,targetCoord.y-1);
+			targetCoord = new Coordinate(targetCoord.x-1,targetCoord.y);
 		}
 		if(dir == "up"){
-			targetCoord = new Coordinate(targetCoord.x+1,targetCoord.y);
+			targetCoord = new Coordinate(targetCoord.x,targetCoord.y-1);
 
 		}
 		if(dir == "down"){
-			targetCoord = new Coordinate(targetCoord.x-1,targetCoord.y);
+			targetCoord = new Coordinate(targetCoord.x,targetCoord.y+1);
 		}
 		
 		if(isValid(targetCoord)){ 
@@ -90,8 +91,9 @@ public class Board {
 		}
 	}
 	public Boolean isValid(Coordinate c){
-		System.out.println("isValid: "+c.toString());
-		return (c.x >= 0 && c.x < this.boardWidth) || (c.y >= 0 && c.y < this.boardHeight);
+		System.out.println("isValid coord: "+c.toString());
+		System.out.println("isValid bool: "+((c.x >= 0 && c.x < this.boardWidth) && (c.y >= 0 && c.y < this.boardHeight)));
+		return (c.x >= 0 && c.x < this.boardWidth) && (c.y >= 0 && c.y < this.boardHeight);
 	}
 	public Boolean isTile(Coordinate c){
 		return this.gameBoard[c.x][c.y] != null;
@@ -100,14 +102,15 @@ public class Board {
 		t2.setValue(t2.getValue() * 2);
 		t2.setIsMerged(true);
 	}
+	
 	public void printBoard(){
 		for(int row = 0; row < this.boardWidth;row++){
 			for(int col = 0; col < this.boardHeight;col++){
-				if(!isTile(new Coordinate(row,col))) {
+				if(!isTile(new Coordinate(col,row))) {
 					System.out.print(".\t");
 				}
 				else {
-					gameBoard[row][col].printTile();
+					gameBoard[col][row].printTile();
 					System.out.print("\t");
 				}
 			}

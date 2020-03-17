@@ -50,7 +50,6 @@ public class PlayerInput extends JFrame implements KeyListener
 			board.handleArrows("down");
 		}
 		
-        board.printBoard();
 	}
 	
 	public void keyReleased (KeyEvent e)
