@@ -55,17 +55,17 @@ public class Board {
 	public Boolean move(String dir, TFETile tile){
 		Coordinate targetCoord = tile.getCoord();
 		if(dir == "right"){
-			targetCoord = new Coordinate(targetCoord.x+1,targetCoord.y);
+			targetCoord = new Coordinate(targetCoord.x,targetCoord.y+1);
 		}
 		if(dir == "left"){
-			targetCoord = new Coordinate(targetCoord.x-1,targetCoord.y);
+			targetCoord = new Coordinate(targetCoord.x,targetCoord.y-1);
 		}
 		if(dir == "up"){
-			targetCoord = new Coordinate(targetCoord.x,targetCoord.y+1);
+			targetCoord = new Coordinate(targetCoord.x+1,targetCoord.y);
 
 		}
 		if(dir == "down"){
-			targetCoord = new Coordinate(targetCoord.x,targetCoord.y-1);
+			targetCoord = new Coordinate(targetCoord.x-1,targetCoord.y);
 		}
 		
 		if(isValid(targetCoord)){ 
