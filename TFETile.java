@@ -5,11 +5,12 @@ public class TFETile {
 	public int value;
 	public Coordinate coord;
 	Boolean isMerged;
+
 	
-	TFETile(){
-		coord = findEmptySpace();
-        value = assignRandomValue();
-        isMerged = false;
+	TFETile(int x,int y,int val){
+		this.coord = new Coordinate(x,y);
+		this.value = val;
+        this.isMerged = false;
 	}
 	public int getValue(){
 		return this.value;
@@ -34,23 +35,6 @@ public class TFETile {
 		this.coord = coord;
 	}
 
-	public Coordinate findEmptySpace(Board board) {		
-		while(true) {
-			int x = Random.nextInt(board.getBoardWidth());
-			int y = Random.nextInt(board.getBoardHeight());
-			
-			if (board.isValid(new Coordinate(x,y))) {
-				return new Coordinate(x, y);
-			}
-		}
-	}
-	
-	private int assignRandomValue() {
-		//tiles can start as a 2 or a 4
-		int multiplier = Random.nextInt(1) + 1; //returns 0/1 + 1
-		return multiplier * 2; // 1 or 2 * 2 = 2 or 4
-		
-	}
 	
 }
 

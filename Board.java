@@ -1,10 +1,12 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Board {
 	int boardWidth;
 	int boardHeight;
 	TFETile[][] gameBoard;
 	ArrayList<TFETile> availableMove;
+	Random random = new Random();
 	
 	Board(int boardWidth, int boardHeight){
 		this.boardWidth = boardWidth;
@@ -19,11 +21,19 @@ public class Board {
 		return this.boardHeight;
 	}
 	public void makeBoard(){
-		for(int row = 0; row < this.boardWidth;row++){
-			for(int col = 0; col < this.boardHeight;col++){	
-				System.out.print('\n');	
+		for (int i = 0;i<5;i++){ //only make 4 tiles on board for now	
+			int x = random.nextInt(this.boardWidth);
+			int y = random.nextInt(this.boardHeight);
+			int val = assignRandomValue();
+			if (this.isValid(new Coordinate(x,y)) && !this.isTile(new Coordinate(x,y))) {
+				this.gameBoard[x][y] = new TFETile(x,y,val);
 			}
 		}
+	}
+	private int assignRandomValue() {
+		//tiles can start as a 2 or a 4
+		int multiplier = random.nextInt(1) + 1; //returns 0/1 + 1
+		return multiplier * 2; // 1 or 2 * 2 = 2 or 4
 	}
 	public void handleArrows(String dir){
 		Boolean possible = false;
@@ -77,7 +87,7 @@ public class Board {
 		return (c.x > 0 && c.x < this.boardWidth) || (c.y > 0 && c.y < this.boardHeight);
 	}
 	public Boolean isTile(Coordinate c){
-		return this.gameBoard[c.x][c.y] == null;
+		return this.gameBoard[c.x][c.y] != null;
 	}
 	public void merge(TFETile t1,TFETile t2){
 		t2.setValue(t2.getValue() * 2);
@@ -93,8 +103,8 @@ public class Board {
 					gameBoard[row][col].printTile();
 					System.out.print("\t");
 				}
-			System.out.print('\n');	
 			}
+			System.out.print('\n');	
 		}
 	}
 	
