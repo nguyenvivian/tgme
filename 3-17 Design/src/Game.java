@@ -24,7 +24,7 @@ public class Game extends JFrame implements KeyListener
 	// Constructor
 	Game()
 	{
-		// Adds a key listener to an invisible jframe
+		// Adds a key listener to a jframe
 		addKeyListener(this);
 		setSize(100, 100);
 		setVisible(true);
@@ -42,7 +42,7 @@ public class Game extends JFrame implements KeyListener
 	{
 		int keyCode = e.getKeyCode();
 		
-		this.activePlayer.getGrid().onPlayerInput(keyCode);
+		this.activePlayer.updateScore(this.activePlayer.getGrid().onPlayerInput(keyCode));
 		this.activePlayer.getGrid().addRandomTile();
 		this.activePlayer.incrementTurn();
 		
@@ -87,7 +87,15 @@ public class Game extends JFrame implements KeyListener
 	// Checks to see if the current player lost the game
 	private Boolean checkPlayerLoss()
 	{
-		return this.activePlayer.getGrid().isFull();
+		if(this.activePlayer.getGrid().isFull())
+		{
+			this.activePlayer.setAlive(false);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	// Displays the game's settings in the console
@@ -121,6 +129,7 @@ public class Game extends JFrame implements KeyListener
 		System.out.printf("[Game Over]\n");
 		System.out.printf("Player '%s' achieved a score of %d in %d turns!\n", this.p1.getUsername(), this.p1.getScore(), this.p1.getTurn());
 		System.out.printf("Player '%s' achieved a score of %d in %d turns!\n", this.p2.getUsername(), this.p2.getScore(), this.p2.getTurn());
+		System.out.println();
 		
 		if (p1.getScore() > p2.getScore())
 			System.out.printf("Player '%s' Wins!\n", this.p1.getUsername());

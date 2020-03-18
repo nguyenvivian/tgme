@@ -91,54 +91,67 @@ public class Grid
 	// Shifts all of the tiles to one side of the grid
 	public void shift(Direction dir)
 	{
-		// Handles the order in which blocks are moved
-		// Moves blocks closer to the side of the direction first
-		int rowStart = 0;
-		int rowCheck = this.width;
-		int rowIncrement = 1;
-		int colStart = 0;
-		int colCheck = this.height;
-		int colIncrement = 1;
-
-		switch(dir)
-		{
-		case RIGHT:
-		    rowStart = this.width;
-		    rowCheck = 0;
-		    rowIncrement = -1;
-		    colStart = 0;
-		    colCheck = this.height;
-		    colIncrement = 1;
-		    break;
-		case UP:
-		    rowStart = 0;
-		    rowCheck = this.width;
-		    rowIncrement = 1;
-		    colStart = this.height;
-		    colCheck = 0;
-		    colIncrement = -1;
-		    break;
-		}
-
 		Boolean moreMovesPossible = false;
 		do
 		{
 			moreMovesPossible = false;
-		    for (int row = rowStart; row < rowCheck; row += rowIncrement)
-		    {
-		        for (int col = colStart; col < this.height; col += colIncrement)
-		        {
-		            if (move(this.tiles[row][col], dir))
-		                moreMovesPossible = true;
-		        }
-		    }
+			
+			switch(dir)
+			{
+			case LEFT:
+			case UP:
+				for (Tile[] col : this.tiles)
+				{
+					for (Tile currentTile : col)
+					{
+						if (currentTile != null && move(currentTile, dir))
+			                moreMovesPossible = true;
+					}
+				}
+				break;
+			case DOWN:
+				for (int row = 0; row < this.width; row++)
+			    {
+			        for (int col = this.height - 1; col >= 0; col--)
+			        {
+			        	Tile currentTile = this.tiles[row][col];
+			        	if (currentTile != null && move(currentTile, dir))
+			                moreMovesPossible = true;
+			        }
+			    }
+				break;
+			case RIGHT:
+				for (int row = this.width - 1; row >= 0; row--)
+			    {
+			        for (int col = 0; col < this.height; col++)
+			        {
+			        	Tile currentTile = this.tiles[row][col];
+			        	if (currentTile != null && move(currentTile, dir))
+			                moreMovesPossible = true;
+			        }
+			    }
+				break;
+			}
 		}
 		while(moreMovesPossible);
+		
+		// Reset tiles merging property
+		for (Tile[] col : this.tiles)
+		{
+			for (Tile currentTile : col)
+			{
+				if (currentTile != null)
+					currentTile.setMerged(false);
+			}
+		}
 	}
 	
 	// Moves a tile one coordinate in the specified direction
 	public Boolean move(Tile t, Direction dir)
 	{
+		//System.out.printf("[Moving]\n");
+		//System.out.printf("Moving Tile %s at %s\n", t.getType(), t.getCoordinate().toString()); ///////////////////////////////////////////DEBUG
+		
 		Coordinate targetCoord = t.getCoordinate();
 		
 		// Move target coordinate in direction of the keypress
@@ -158,6 +171,8 @@ public class Grid
 			break;
 		}
 		
+		//System.out.printf("Moving to location %s\n", targetCoord.toString()); ////////////////////////////////////////////////////////DEBUG
+		
 		Boolean successful = false;
 		if(inBounds(targetCoord))
 		{
@@ -167,7 +182,7 @@ public class Grid
 				Tile t2 = this.tiles[targetCoord.x][targetCoord.y];
 				
 				// Merge tiles if they are the same type
-				if (t.getType().equals(t2.getType()) && !t2.getMerged())
+				if (t.getType().equals(t2.getType()) && !t.getMerged() && !t2.getMerged())
 				{
 					this.merge(t, t2);
 					successful = true;
@@ -190,16 +205,7 @@ public class Grid
 		{
 			successful = false;
 		}
-		
-		// Reset tiles merging property
-		for (Tile[] col : this.tiles)
-		{
-			for (Tile currentTile : col)
-			{
-				currentTile.setMerged(false);
-			}
-		}
-		
+
 		return successful;
 	}
 	
@@ -210,9 +216,12 @@ public class Grid
 		currentMovePoints += t1.getScore();
 		
 		t2.setScore(t2.getScore() * 2);
+		t2.setType(Integer.toString(t2.getScore()));
 		t2.setMerged(true);
 		
+		this.removeTile(t1.getCoordinate());
 	}
+	
 	
 	// Prints the grid in the console
 	public void draw()
@@ -263,7 +272,9 @@ public class Grid
 			
 			// Cleans up tile if not added
 			if (!tilePlaced)
+			{
 				newTile = null;
+			}
 		}
 
 		return tilePos;
@@ -278,7 +289,7 @@ public class Grid
 		{
 			this.tiles[tilePos.x][tilePos.y] = t;
 			this.numTiles++;
-			System.out.printf("Adding Tile to Board at Pos(%d, %d) with type '%s'\n", t.getCoordinate().x, t.getCoordinate().y, t.getType());
+			// System.out.printf("Adding Tile to Board at %s with type '%s'\n", this.tiles[tilePos.x][tilePos.y].getCoordinate().toString(), this.tiles[tilePos.x][tilePos.y].getType()); ///// DEBUG!
 			return true;
 		}
 		else
