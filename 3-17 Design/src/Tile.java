@@ -4,12 +4,16 @@ public class Tile
 	private int score;
 	private Coordinate coord;
 	
+	// 2048 Specific
+	private Boolean merged;
+	
 	// Constructor
 	Tile(String type, int score, Coordinate coord)
 	{
 		this.type = type;
 		this.score = score;
 		this.coord = coord;
+		this.merged = false;
 	}
 	
 	// Getters and Setters
@@ -41,6 +45,16 @@ public class Tile
 	public void setCoordinate(Coordinate coord)
 	{
 		this.coord = coord;
+	}
+	
+	public Boolean getMerged()
+	{
+		return this.merged;
+	}
+	
+	public void setMerged(Boolean merged)
+	{
+		this.merged = merged;
 	}
 	
 	// Methods
