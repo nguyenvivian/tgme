@@ -24,7 +24,7 @@ public class Game extends JFrame implements KeyListener
 	// Constructor
 	Game()
 	{
-		// Adds a key listener to a jframe
+		// Adds a key listener to a JFrame
 		addKeyListener(this);
 		setSize(100, 100);
 		setVisible(true);
@@ -42,7 +42,7 @@ public class Game extends JFrame implements KeyListener
 	{
 		int keyCode = e.getKeyCode();
 		
-		this.activePlayer.updateScore(this.activePlayer.getGrid().onPlayerInput(keyCode));
+		this.activePlayer.updateScore(this.activePlayer.getGrid().onPlayerInput(keyCode)); // Adds score for player's move
 		this.activePlayer.getGrid().addRandomTile();
 		this.activePlayer.incrementTurn();
 		
@@ -122,7 +122,7 @@ public class Game extends JFrame implements KeyListener
 		this.p2 = new UserProfile(p2Name, new Grid(p2GridWidth, p2GridHeight));
 	}
 
-	
+	// Displays scores at the end of the game
 	private void displayEndScreen()
 	{
 		System.out.printf("\n\n\n\n\n");
@@ -139,6 +139,7 @@ public class Game extends JFrame implements KeyListener
 			System.out.printf("Tie Game!\n");
 	}
 	
+	// Runs the game
 	public static void main(String[] args)
 	{
 		Game game = new Game();

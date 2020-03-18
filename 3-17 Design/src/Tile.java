@@ -4,7 +4,7 @@ public class Tile
 	private int score;
 	private Coordinate coord;
 	
-	// 2048 Specific
+	// ***2048 Specific***
 	private Boolean merged;
 	
 	// Constructor
@@ -47,11 +47,13 @@ public class Tile
 		this.coord = coord;
 	}
 	
+	// ***2048 Specific***
 	public Boolean getMerged()
 	{
 		return this.merged;
 	}
 	
+	// ***2048 Specific***
 	public void setMerged(Boolean merged)
 	{
 		this.merged = merged;

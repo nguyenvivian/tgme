@@ -88,6 +88,7 @@ public class Grid
 		return currentMovePoints;
 	}
 	
+	// ***2048 Specific***
 	// Shifts all of the tiles to one side of the grid
 	public void shift(Direction dir)
 	{
@@ -146,6 +147,7 @@ public class Grid
 		}
 	}
 	
+	// ***2048 Specific***
 	// Moves a tile one coordinate in the specified direction
 	public Boolean move(Tile t, Direction dir)
 	{
@@ -209,6 +211,7 @@ public class Grid
 		return successful;
 	}
 	
+	// ***2048 Specific***
 	// Moves the first tile to the second tiles location and merges them
 	private void merge(Tile t1, Tile t2)
 	{
